@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client'
 import { App } from './app.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
+import StoreContextProvider from './Context/StoreContext.jsx'
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <BrowserRouter>
-      <App />
+      <StoreContextProvider>
+        <App />
+      </StoreContextProvider>
     </BrowserRouter>
   );
 } else {
