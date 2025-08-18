@@ -1,8 +1,16 @@
 import React from 'react'
+import NavBar from './component/NavBar/NavBar'
+import SideBar from './component/Sidebar/SideBar'
 
 const App = () => {
   return (
-    <div>app</div>
+    <div>
+      <NavBar/>
+      <hr />
+      <div className="app-content">
+        <SideBar/>
+      </div>
+    </div>
   )
 }
 
