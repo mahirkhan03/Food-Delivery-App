@@ -4,15 +4,37 @@ import bcrypt from "bcrypt"
 import validator from "validator"
 
 const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "User does't exists" })
+        }
 
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.json({ success: false, message: "Invalid password" })
+        }
+
+        const token = createToken(user._id);
+        res.json({ success: true, token })
+
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: "Error" })
+    }
+
+}
+ 
+const createToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET)
 }
 
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     try {
-        const createToken = (id) => {
-            return jwt.sign({ id }, process.env.JWT_SECRET)
-        }
+
         // checking is user already exists
         const exists = await userModel.findOne({ email });
         if (exists) {
