@@ -18,6 +18,7 @@ const NavBar = ({ setShowLogin }) => {
         navigate("/")
 
     }
+    console.log("Cart total:", getTotalCartAmount());
     return (
         <div className='navbar'>
             <Link to='/'><img src={assets.logo} alt="" className="logo" /></Link>
@@ -31,8 +32,9 @@ const NavBar = ({ setShowLogin }) => {
                 <img src={assets.search_icon} alt="" />
                 <div className="nav-search-icon">
                     <Link to='/cart'><img src={assets.basket_icon} alt="" /></Link>
-                    <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
+                    {getTotalCartAmount() > 0 && <div className="dot"></div>}
                 </div>
+
                 {!token ? <button onClick={() => setShowLogin(true)}>sign in</button>
                     : <div className='navbar-profile'>
                         <img src={assets.profile_icon} alt="" />
